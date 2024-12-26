@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>諾亞賽車</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="address=no">
+    <link rel="stylesheet" href="css/index.css"/>
+    <script>
+        let userApparatus = navigator.userAgent;
+        if(userApparatus.match(/(iPhone|Android|iPad)/)){
+            window.location='mobile/index.html';
+        }
+    </script>
+</head>
+<body>
+<audio id="car_bg_music" src="images/run_voice.mp3" loop></audio>
+<div id="ny_car_logo"></div>
+<div class="ny_car_pop_up_window">
+    <div id="ny_car_wrap">
+        <div class="ny_car_header">
+            <div class="ny_car_logo"></div>
+            <div class="ranking_light_box">
+                <div class="car_9_light"></div>
+                <div class="car_4_light"></div>
+                <div class="car_8_light"></div>
+                <div class="car_7_light"></div>
+                <div class="car_5_light"></div>
+                <div class="car_2_light"></div>
+                <div class="car_10_light"></div>
+                <div class="car_1_light"></div>
+                <div class="car_3_light"></div>
+                <div class="car_6_light"></div>
+            </div>
+            <div class="lottery_info">
+                <div class="next_lottery">
+                    <span>下期开奖</span><span>524391</span>
+                </div>
+                <div class="lottery_time">
+                    <span>开奖时间</span><span>12:31</span>
+                </div>
+            </div>
+            <div id="ny_car_voice" class="close"></div>
+        </div>
+        <div id="ny_car_container">
+            <div class="top_three_car_box">
+                <div id="third_place"></div>
+                <div id="second_place"></div>
+                <div id="first_place"></div>
+            </div>
+            <div class="top_three_medal_box">
+                <div class="bronze_medal"></div>
+                <div class="silver_medal"></div>
+                <div class="gold_medal"></div>
+            </div>
+            <div class="show_girl"></div>
+            <div class="ny_car_chase_scene">
+                <div class="scene_bg"></div>
+                <div class="scene_road">
+                    <div class="scene_start"></div>
+                    <div class="scene_end"></div>
+                    <div class="ny_car_chase_cars_scene">
+                        <div id="car_1"><div></div></div>
+                        <div id="car_2"><div></div></div>
+                        <div id="car_3"><div></div></div>
+                        <div id="car_4"><div></div></div>
+                        <div id="car_5"><div></div></div>
+                        <div id="car_6"><div></div></div>
+                        <div id="car_7"><div></div></div>
+                        <div id="car_8"><div></div></div>
+                        <div id="car_9"><div></div></div>
+                        <div id="car_10"><div></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="ny_car_countdown"></div>
+        </div>
+        <div class="ny_car_footer">
+            <div class="footer_title">
+                <div class="footer_title_head">奖号</div>
+                <div class="footer_title_content"><!-- award_number  -->
+                    <div class="year_month_day">2017/12/28</div>
+                    <div>12:32</div>
+                    <div>524390</div>
+                </div>
+            </div>
+            <div class="footer_title">
+                <div class="footer_title_head">冠亚军和</div>
+                <div class="footer_title_content"><!-- champion_and  -->
+                    <div>11</div>
+                    <div>小</div>
+                    <div>单</div>
+                </div>
+            </div>
+            <div class="footer_title">
+                <div class="footer_title_head">一至五名龙虎</div>
+                <div class="footer_title_content"><!-- dragon_tiger_1to5  -->
+                    <div>龙</div>
+                    <div>虎</div>
+                    <div>虎</div>
+                    <div>龙</div>
+                    <div>龙</div>
+                </div>
+            </div>
+            <div id="ny_car_try_luck_btn"></div>
+            <div id="countdown_light"></div>
+        </div>
+        <div class="ny_car_close"></div>
+    </div>
+</div>
+
+<div 'refer'>
+    <!-- 諾亞賽車3分_賽車追逐場景_總時數 32s-->
+    <div class="NY_PK_chase_total_time"></div>
+    <!-- 賽車追逐場景動畫結束前_定格的總時間 29s-->
+    <div class="freeze_screen_before_chase_animation_end"></div>
+    <div class="NYpkChaseCars_left-100_start"></div>
+    <div class="NYpkChaseCars_left14_start"></div>
+    <div class="NYpkChaseCars_left14_end"></div>
+
+    <!-- 試手氣_賽車追逐場景_總時數 20s-->
+    <div class="try_luck_total_time"></div>
+    <!-- 試手氣的賽車追逐場景動畫結束前_定格的總時間 17s-->
+    <div class="freeze_screen_before_try_luck_animation_end"></div>
+    <div class="tryLuckChaseCars_left-100_start"></div>
+    <div class="tryLuckChaseCars_left14_start"></div>
+    <div class="tryLuckChaseCars_left14_end"></div>    
+</div>
+
+<script>
+    (function(){
+        const carTryLuckBtn = document.getElementById('ny_car_try_luck_btn'),
+            carBgMusic = document.getElementById("car_bg_music"),
+            nyCarClose = document.querySelector('.ny_car_close'),
+            CAR_COUNTDOWN_SEC = 180,//設定倒數秒數 180sec
+            CAR_TRY_LUCK_NOT = 30,//設定開獎前幾秒不能試試手氣 30sec
+            CAR_CHASE_READY = 5,//設定開獎前幾秒賽車起動 5sec
+            CAR_DATA = [1,2,3,4,5,6,7,8,9,10],
+            CAR_CHASE_RANKING = [
+                'first_place',
+                'second_place',
+                'third_place',
+                'fourth_place',
+                'fifth_place',
+                'sixth_place',
+                'seventh_place',
+                'eight_place',
+                'ninth_place',
+                'tenth_place'
+            ];
+        let carCountdownTimer,
+            car_countdown_sec = CAR_COUNTDOWN_SEC;
+
+    // 音樂控製
+        document.getElementById('ny_car_voice').onclick = function(){
+            this.classList.toggle('close');
+            this.classList.contains('close') ? carBgMusic.pause() : carBgMusic.play()
+            //播放     carBgMusic.play();    //暂停     carBgMusic.pause();
+            //停止     carBgMusic.pause(); carBgMusic.currentTime = 0;
+            //重新播放  carBgMusic.currentTime = 0; carBgMusic.play();
+        }
+    // nyCarBox開關控製
+        document.getElementById('ny_car_logo').onclick = function(){
+            document.querySelector('.ny_car_pop_up_window').style = '';
+        }
+        function ny_car_close(){
+            document.querySelector('.ny_car_pop_up_window').style.display = 'none';
+        }
+        function nyCarBoxCloseOn(){
+            nyCarClose.addEventListener('click', ny_car_close);
+        }
+        nyCarBoxCloseOn();
+    // 開始讀秒控製 與 試手氣，相關控製
+        function carShowTimer(){
+            document.querySelector('.ny_car_countdown').innerHTML= car_countdown_sec;
+        }
+        function carTryLuckBtnOff(){
+            carTryLuckBtn.removeEventListener('click', car_try_luck);
+        }
+        function carTryLuckBtnOn(){
+            carTryLuckBtn.addEventListener('click', car_try_luck);
+        }
+        function carCountdown(){            
+            if(car_countdown_sec > 0){
+                if(car_countdown_sec === CAR_TRY_LUCK_NOT){
+                    document.getElementById('countdown_light').style.display = 'block';
+                    carTryLuckBtnOff();
+                }
+                if(car_countdown_sec === CAR_CHASE_READY){
+                    document.getElementById('ny_car_wrap').className = 'chase_scene_ready';
+                } 
+                carShowTimer();
+                car_countdown_sec -= 1;
+            }else{
+                car_countdown_sec = 'GO';
+                carShowTimer();
+                setTimeout(car_chase_start,500);
+                return false;
+            };
+            carCountdownTimer = setTimeout(carCountdown,1000);
+        }
+        function car_chase_start(){
+            document.getElementById('ny_car_wrap').className = 'chase_ranking';
+            NuoYa_cars_ranking();
+        }
+        function car_try_luck(){
+            clearTimeout(carCountdownTimer)
+            carTryLuckBtnOff();
+            document.getElementById('ny_car_wrap').className = 'try_luck_ranking';
+            NuoYa_cars_ranking();
+        }
+        function NuoYa_cars_ranking(){
+            let car_data = CAR_DATA.sort(function(a, b){
+                    return Math.round(Math.random());
+                }),
+                [car_1, car_2, car_3, car_4, car_5, car_6, car_7, car_8, car_9, car_10] = car_data;
+            console.log(car_data);
+
+            nyCarClose.removeEventListener('click', ny_car_close);
+            document.getElementById('first_place').className = 'car_'+car_1;
+            document.getElementById('second_place').className = 'car_'+car_2;
+            document.getElementById('third_place').className = 'car_'+car_3;
+            car_data.forEach(function(carNumber, index){
+                document.querySelector('.ranking_light_box > div:nth-child(' + ( index + 1 ) + ')').className = 'car_' + carNumber + '_light';
+                document.getElementById('car_' + carNumber).className = CAR_CHASE_RANKING[index];
+            })
+            if(document.getElementById('ny_car_wrap').classList.contains('chase_ranking')){
+                setTimeout(NuoYa_PK10_Restart,39000);
+                // 32s(諾亞賽車的動畫時間) + 2s(前三名賽車和獎盃的出現) + 5s(停止畫面) = 39s
+            }else{
+                setTimeout(NuoYa_PK10_Restart,27000);
+                // 20s(試手氣的動畫時間) + 2s(前三名賽車和獎盃的出現) + 5s(停止畫面) = 27s
+            };
+        }
+        function NuoYa_PK10_Restart(){
+            document.getElementById('ny_car_wrap').className = '';
+            document.getElementById('countdown_light').style.display = '';
+            carTryLuckBtnOn();
+            car_countdown_sec = CAR_COUNTDOWN_SEC;
+            carCountdown();
+            nyCarBoxCloseOn();
+        }
+        carCountdown();
+        carTryLuckBtnOn();
+    })()
+</script>
+</body>
+</html>
